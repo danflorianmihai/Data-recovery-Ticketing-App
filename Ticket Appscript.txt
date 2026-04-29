@@ -1,9 +1,19 @@
 function doPost(e) {
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.parameter.data);
 
-  var ticketID = sheet.getLastRow(); // incremental
+  var data;
+
+  // ✅ fallback inteligent
+  if (e.parameter && e.parameter.data) {
+    data = JSON.parse(e.parameter.data);
+  } else if (e.postData && e.postData.contents) {
+    data = JSON.parse(e.postData.contents);
+  } else {
+    return ContentService.createTextOutput("NO DATA");
+  }
+
+  var ticketID = sheet.getLastRow();
 
   sheet.appendRow([
     new Date(),
@@ -34,7 +44,12 @@ function doPost(e) {
       "Email: " + data.email
   });
 
-  
-  return ContentService.createTextOutput("OK");
+  return ContentService
+    .createTextOutput(JSON.stringify({ ticketID: ticketID }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
 
+/* pentru test */
+function doGet(e) {
+  return ContentService.createTextOutput("OK - Script activ");
 }
