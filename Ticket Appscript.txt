@@ -1,7 +1,7 @@
 function doPost(e) {
 
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
+  var data = JSON.parse(e.parameter.data);
 
   var ticketID = sheet.getLastRow(); // incremental
 
@@ -34,7 +34,7 @@ function doPost(e) {
       "Email: " + data.email
   });
 
-  return ContentService
-    .createTextOutput(JSON.stringify({ticketID: ticketID}))
-    .setMimeType(ContentService.MimeType.JSON);
+  
+  return ContentService.createTextOutput("OK");
+
 }
