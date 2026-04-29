@@ -213,6 +213,13 @@ body { font-family: Arial; background:#fff; }
 
 <!-- CLIENT -->
 <div id="client" class="hidden">
+  <form id="hiddenForm" method="POST" target="hiddenFrame"
+      action="https://script.google.com/macros/s/AKfycbxdbP7Z23dQrYv35IKViUlBeFEAzKvzYMsldGW-ecSFiC2zE_06kOzfMTTYd8PmEVPnpw/exec" style="display:none;">
+  <input name="data" id="formData">
+</form>
+
+<iframe name="hiddenFrame" style="display:none;"></iframe>
+``
 <div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
 
 <h3>Date client</h3>
@@ -261,24 +268,20 @@ function collectClientData(){
 }
 
 /* ✅ SUBMIT FINAL */
+
 function submitTicket(){
 
-  // adaugăm datele clientului
   Object.assign(data, collectClientData());
 
-  fetch("https://script.google.com/macros/s/AKfycbxdbP7Z23dQrYv35IKViUlBeFEAzKvzYMsldGW-ecSFiC2zE_06kOzfMTTYd8PmEVPnpw/exec", {
-    method: "POST",
-    body: JSON.stringify(data)
-  })
-  .then(res => res.json())
-  .then(res => {
-    alert("Ticket înregistrat! ID: " + res.ticketID);
-    location.reload();
-  })
-  .catch(() => {
-    alert("Eroare la trimitere");
-  });
+  // transform JSON → string
+  document.getElementById("formData").value = JSON.stringify(data);
+
+  document.getElementById("hiddenForm").submit();
+
+  alert("Ticket trimis ✅");
+  location.reload();
 }
+
 
 /* utilitar */
 function val(id){
