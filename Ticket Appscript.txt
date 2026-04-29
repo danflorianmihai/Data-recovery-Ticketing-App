@@ -1,0 +1,40 @@
+function doPost(e) {
+
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var data = JSON.parse(e.postData.contents);
+
+  var ticketID = sheet.getLastRow(); // incremental
+
+  sheet.appendRow([
+    new Date(),
+    ticketID,
+    "Ticket Nou",
+    data.device,
+    data.hdd_brand,
+    data.hdd_problem,
+    data.hdd_opened,
+    data.hdd_capacity,
+    data.name,
+    data.company,
+    data.email,
+    data.phone,
+    data.address,
+    data.details
+  ]);
+
+  MailApp.sendEmail({
+    to: "dan.florian.mihai@gmail.com",
+    subject: "S-a înscris un ticket nou #" + ticketID,
+    htmlBody:
+      "<b>Ticket nou:</b><br><br>" +
+      "ID: " + ticketID + "<br>" +
+      "Dispozitiv: " + data.device + "<br>" +
+      "Client: " + data.name + "<br>" +
+      "Telefon: " + data.phone + "<br>" +
+      "Email: " + data.email
+  });
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ticketID: ticketID}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
