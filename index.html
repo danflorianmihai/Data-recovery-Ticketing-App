@@ -213,14 +213,20 @@ body { font-family: Arial; background:#fff; }
 
 <!-- CLIENT -->
 <div id="client" class="hidden">
-  <form id="hiddenForm" method="POST" target="hiddenFrame"
-      action="https://script.google.com/macros/s/AKfycbxdbP7Z23dQrYv35IKViUlBeFEAzKvzYMsldGW-ecSFiC2zE_06kOzfMTTYd8PmEVPnpw/exec" style="display:none;">
-  <input name="data" id="formData">
+
+<form id="hiddenForm" method="POST" target="hiddenFrame" 
+action="https://script.google.com/macros/s/AKfycbxdbP7Z23dQrYv35IKViUlBeFEAzKvzYMsldGW-ecSFiC2zE_06kOzfMTTYd8PmEVPnpw/exec" 
+style="display:none;">
+
+  <input type="hidden" name="data" id="formData">
+
 </form>
 
 <iframe name="hiddenFrame" style="display:none;"></iframe>
-``
-<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+
+<div class="nav-top">
+  <button onclick="back('start')">← Înapoi</button>
+</div>
 
 <h3>Date client</h3>
 
@@ -232,6 +238,7 @@ body { font-family: Arial; background:#fff; }
 <textarea id="details" placeholder="Mai multe detalii"></textarea>
 
 <button class="btn" onclick="submitTicket()">Trimite</button>
+
 </div>
 
 </div>
