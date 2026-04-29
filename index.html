@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+
+<style>
+body { font-family: Arial; background:#fff; }
+.container { max-width:600px; margin:auto; padding:20px; }
+
+.btn {
+  width:100%;
+  padding:18px;
+  margin-top:10px;
+  border:2px solid black;
+  background:white;
+  cursor:pointer;
+  text-align:center;
+}
+
+.btn.selected {
+  background:black;
+  color:white;
+}
+
+.nav-top {
+  margin-bottom:20px;
+}
+
+.hidden { display:none; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- STEP 1 -->
+<div id="start">
+<h3>Ce tip de dispozitiv ai?</h3>
+
+<button class="btn" onclick="goNext(this,'device','HDD','hdd1')">Hard Disk</button>
+<button class="btn" onclick="goNext(this,'device','CARD','card1')">Card Memorie</button>
+<button class="btn" onclick="goNext(this,'device','USB','usb1')">USB Stick</button>
+<button class="btn" onclick="goNext(this,'device','RAID','raid1')">RAID</button>
+<button class="btn" onclick="goNext(this,'device','SSD','ssd1')">SSD</button>
+</div>
+
+<!-- HDD -->
+<div id="hdd1" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+<h3>Selectează model</h3>
+
+<button class="btn" onclick="goNext(this,'hdd_brand','HGST','hdd2')">Hitachi / HGST</button>
+<button class="btn" onclick="goNext(this,'hdd_brand','Toshiba','hdd2')">Toshiba</button>
+<button class="btn" onclick="goNext(this,'hdd_brand','WD','hdd2')">Western Digital</button>
+<button class="btn" onclick="goNext(this,'hdd_brand','Seagate','hdd2')">Seagate</button>
+<button class="btn" onclick="goNext(this,'hdd_brand','Samsung','hdd2')">Samsung</button>
+<button class="btn" onclick="goNext(this,'hdd_brand','Altul','hdd2')">Altul</button>
+</div>
+
+<div id="hdd2" class="hidden">
+<div class="nav-top"><button onclick="back('hdd1')">← Înapoi</button></div>
+<h3>Ce simptome are?</h3>
+
+<button class="btn" onclick="goNext(this,'hdd_problem','Nu recunoscut','hdd3')">Se învârte dar nu e recunoscut</button>
+<button class="btn" onclick="goNext(this,'hdd_problem','Bipăie','hdd3')">Nu se învârte dar bipăie</button>
+<button class="btn" onclick="goNext(this,'hdd_problem','Nu face nimic','hdd3')">Nu face nimic</button>
+<button class="btn" onclick="goNext(this,'hdd_problem','Click-uri','hdd3')">Click-uri și bipuri</button>
+<button class="btn" onclick="goNext(this,'hdd_problem','Rășniță','hdd3')">Sunet de râșniță</button>
+<button class="btn" onclick="goNext(this,'hdd_problem','Altul','hdd3')">Altul</button>
+</div>
+
+<div id="hdd3" class="hidden">
+<div class="nav-top"><button onclick="back('hdd2')">← Înapoi</button></div>
+<h3>A fost deschis?</h3>
+
+<button class="btn" onclick="goNext(this,'hdd_opened','Da','hdd4')">Da</button>
+<button class="btn" onclick="goNext(this,'hdd_opened','Nu','hdd4')">Nu</button>
+</div>
+
+<div id="hdd4" class="hidden">
+<div class="nav-top"><button onclick="back('hdd3')">← Înapoi</button></div>
+<h3>Capacitate?</h3>
+
+<button class="btn" onclick="goNext(this,'hdd_capacity','0-200GB','client')">0-200 GB</button>
+<button class="btn" onclick="goNext(this,'hdd_capacity','200GB-2TB','client')">200 GB – 2 TB</button>
+<button class="btn" onclick="goNext(this,'hdd_capacity','>2TB','client')">> 2 TB</button>
+</div>
+
+<!-- CARD -->
+<div id="card1" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+<h3>Tip card</h3>
+
+<button class="btn" onclick="goNext(this,'card_type','SD','card2')">SD</button>
+<button class="btn" onclick="goNext(this,'card_type','microSD','card2')">microSD</button>
+<button class="btn" onclick="goNext(this,'card_type','CF','card2')">CF</button>
+<button class="btn" onclick="goNext(this,'card_type','CFast','card2')">CFast</button>
+</div>
+
+<div id="card2" class="hidden">
+<div class="nav-top"><button onclick="back('card1')">← Înapoi</button></div>
+<h3>Brand</h3>
+
+<button class="btn" onclick="goNext(this,'card_brand','Sandisk','card3')">Sandisk</button>
+<button class="btn" onclick="goNext(this,'card_brand','Lexar','card3')">Lexar</button>
+<button class="btn" onclick="goNext(this,'card_brand','Kingston','card3')">Kingston</button>
+<button class="btn" onclick="goNext(this,'card_brand','Sony','card3')">Sony</button>
+<button class="btn" onclick="goNext(this,'card_brand','Altul','card3')">Altul</button>
+</div>
+
+<div id="card3" class="hidden">
+<div class="nav-top"><button onclick="back('card2')">← Înapoi</button></div>
+<h3>Problemă</h3>
+
+<button class="btn" onclick="goNext(this,'card_problem','Distrus','card4')">Distrugere fizică</button>
+<button class="btn" onclick="goNext(this,'card_problem','Nu recunoscut','card4')">Nu e recunoscut</button>
+<button class="btn" onclick="goNext(this,'card_problem','Formatat','card4')">Formatat</button>
+<button class="btn" onclick="goNext(this,'card_problem','Capacitate greșită','card4')">Capacitate greșită</button>
+</div>
+
+<div id="card4" class="hidden">
+<div class="nav-top"><button onclick="back('card3')">← Înapoi</button></div>
+<h3>Capacitate</h3>
+
+<button class="btn" onclick="goNext(this,'card_capacity','<=8GB','client')">≤8 GB</button>
+<button class="btn" onclick="goNext(this,'card_capacity','16GB','client')">16 GB</button>
+<button class="btn" onclick="goNext(this,'card_capacity','32GB','client')">32 GB</button>
+<button class="btn" onclick="goNext(this,'card_capacity','64GB','client')">64 GB</button>
+<button class="btn" onclick="goNext(this,'card_capacity','>=128GB','client')">≥128 GB</button>
+</div>
+
+<!-- USB -->
+<div id="usb1" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+<h3>Brand</h3>
+
+<button class="btn" onclick="goNext(this,'usb_brand','Corsair','usb2')">Corsair</button>
+<button class="btn" onclick="goNext(this,'usb_brand','Sandisk','usb2')">Sandisk</button>
+<button class="btn" onclick="goNext(this,'usb_brand','Kingston','usb2')">Kingston</button>
+<button class="btn" onclick="goNext(this,'usb_brand','Altul','usb2')">Altul</button>
+</div>
+
+<div id="usb2" class="hidden">
+<div class="nav-top"><button onclick="back('usb1')">← Înapoi</button></div>
+<h3>Problemă</h3>
+
+<button class="btn" onclick="goNext(this,'usb_problem','Distrus','usb3')">Distrugere fizică</button>
+<button class="btn" onclick="goNext(this,'usb_problem','Nu recunoscut','usb3')">Nu e recunoscut</button>
+<button class="btn" onclick="goNext(this,'usb_problem','Formatat','usb3')">Formatat</button>
+<button class="btn" onclick="goNext(this,'usb_problem','Capacitate greșită','usb3')">Capacitate greșită</button>
+</div>
+
+<div id="usb3" class="hidden">
+<div class="nav-top"><button onclick="back('usb2')">← Înapoi</button></div>
+<h3>Capacitate</h3>
+
+<button class="btn" onclick="goNext(this,'usb_capacity','<=8GB','client')">≤8 GB</button>
+<button class="btn" onclick="goNext(this,'usb_capacity','32GB','client')">32 GB</button>
+<button class="btn" onclick="goNext(this,'usb_capacity','>=128GB','client')">≥128 GB</button>
+</div>
+
+<!-- SSD -->
+<div id="ssd1" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+<h3>Tip SSD</h3>
+
+<button class="btn" onclick="goNext(this,'ssd_type','NVME','ssd2')">NVME</button>
+<button class="btn" onclick="goNext(this,'ssd_type','SATA','ssd2')">SATA</button>
+<button class="btn" onclick="goNext(this,'ssd_type','Macbook','ssd2')">Macbook</button>
+<button class="btn" onclick="goNext(this,'ssd_type','Nu știu','ssd2')">Nu știu</button>
+</div>
+
+<div id="ssd2" class="hidden">
+<div class="nav-top"><button onclick="back('ssd1')">← Înapoi</button></div>
+<h3>Capacitate</h3>
+
+<button class="btn" onclick="goNext(this,'ssd_capacity','0-200GB','client')">0-200 GB</button>
+<button class="btn" onclick="goNext(this,'ssd_capacity','200GB-2TB','client')">200GB – 2TB</button>
+<button class="btn" onclick="goNext(this,'ssd_capacity','>2TB','client')">>2TB</button>
+</div>
+
+<!-- RAID -->
+<div id="raid1" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+<h3>Tip RAID</h3>
+
+<button class="btn" onclick="goNext(this,'raid_type','RAID0','raid2')">RAID 0</button>
+<button class="btn" onclick="goNext(this,'raid_type','RAID5','raid2')">RAID 5</button>
+<button class="btn" onclick="goNext(this,'raid_type','Altul','raid2')">Altul</button>
+</div>
+
+<div id="raid2" class="hidden">
+<div class="nav-top"><button onclick="back('raid1')">← Înapoi</button></div>
+<h3>Număr HDD-uri/SSD-uri</h3>
+<button class="btn" onclick="goNext(this,'raid_hdd','1','raid3')">1</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','2','raid3')">2</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','3','raid3')">3</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','4','raid3')">4</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','5','raid3')">5</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','6','raid3')">6</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','7','raid3')">7</button>
+<button class="btn" onclick="goNext(this,'raid_hdd','8','raid3')">8</button>
+</div>
+
+<div id="raid3" class="hidden">
+<div class="nav-top"><button onclick="back('raid2')">← Înapoi</button></div>
+<h3>Capacitate totală</h3>
+
+<button class="btn" onclick="goNext(this,'raid_capacity','<5TB','client')">&lt; 5 TB</button>
+<button class="btn" onclick="goNext(this,'raid_capacity','>5TB','client')">&gt; 5 TB</button>
+</div>
+
+<!-- CLIENT -->
+<div id="client" class="hidden">
+<div class="nav-top"><button onclick="back('start')">← Înapoi</button></div>
+
+<h3>Date client</h3>
+
+<input id="name" placeholder="Nume și prenume">
+<input id="company" placeholder="Firmă">
+<input id="email" placeholder="Email">
+<input id="phone" placeholder="Telefon">
+<input id="address" placeholder="Adresă">
+<textarea id="details" placeholder="Mai multe detalii"></textarea>
+
+<button class="btn" onclick="submit()">Trimite</button>
+</div>
+
+</div>
+
+<script>
+let data = {};
+
+function goNext(el,key,value,next){
+  let buttons=el.parentNode.querySelectorAll('.btn');
+  buttons.forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+
+  data[key]=value;
+
+  setTimeout(()=>show(next),150);
+}
+
+function show(id){
+  document.querySelectorAll(".container > div").forEach(d=>d.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function back(id){ show(id); }
+
+function collectClientData(){
+  return {
+    name: val("name"),
+    company: val("company"),
+    email: val("email"),
+    phone: val("phone"),
+    address: val("address"),
+    details: val("details")
+  };
+}
+
+/* ✅ SUBMIT FINAL */
+function submitTicket(){
+
+  // adaugăm datele clientului
+  Object.assign(data, collectClientData());
+
+  fetch("https://script.google.com/macros/s/AKfycbxdbP7Z23dQrYv35IKViUlBeFEAzKvzYMsldGW-ecSFiC2zE_06kOzfMTTYd8PmEVPnpw/exec", {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(res => {
+    alert("Ticket înregistrat! ID: " + res.ticketID);
+    location.reload();
+  })
+  .catch(() => {
+    alert("Eroare la trimitere");
+  });
+}
+
+/* utilitar */
+function val(id){
+  const el = document.getElementById(id);
+  return el ? el.value : "";
+}
+``
+
+function val(id){ return document.getElementById(id).value; }
+</script>
+
+</body>
+</html>
