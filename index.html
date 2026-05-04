@@ -230,74 +230,58 @@ style="display:none;">
 
 <h3>Date client</h3>
 
-<input id="name" placeholder="Nume și prenume" autocomplete="name">
-<input id="company" placeholder="Firmă" autocomplete="company">
-<input id="email" placeholder="Email" autocomplete="email">
-<input id="phone" placeholder="Telefon" autocomplete="phone">
-<input id="address" placeholder="Adresă" autocomplete="adresa">
-<textarea id="details" placeholder="Mai multe detalii" autocomplete="off"></textarea>
-
-<button class="btn" onclick="submitTicket()">Trimite</button>
-
-</div>
-
+<div id="client" class="hidden">
+  <h3>Date contact</h3>
+  <input type="text" id="name" placeholder="Nume complet" style="width:100%; padding:10px; margin-bottom:10px;"><br>
+  <input type="email" id="email" placeholder="Email" style="width:100%; padding:10px; margin-bottom:10px;"><br>
+  <input type="text" id="phone" placeholder="Telefon" style="width:100%; padding:10px; margin-bottom:10px;"><br>
+  <button class="btn" onclick="submitForm()">Trimite solicitarea</button>
 </div>
 
 <script>
-let data = {};
+let formData = {}; // Aici salvăm datele selectate
 
-function goNext(el,key,value,next){
-  let buttons=el.parentNode.querySelectorAll('.btn');
-  buttons.forEach(b=>b.classList.remove('selected'));
-  el.classList.add('selected');
+function goNext(btn, key, value, nextId) {
+    formData[key] = value; // Salvăm selecția
+    
+    // Vizual (opțional): marchează butonul ca selectat
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
 
-  data[key]=value;
-
-  setTimeout(()=>show(next),150);
+    // Trecerea la următorul pas
+    parent.classList.add('hidden');
+    document.getElementById(nextId).classList.remove('hidden');
 }
 
-function show(id){
-  document.querySelectorAll(".container > div").forEach(d=>d.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+function back(prevId) {
+    const current = document.querySelector('div:not(.hidden)');
+    current.classList.add('hidden');
+    document.getElementById(prevId).classList.remove('hidden');
 }
 
-function back(id){ show(id); }
+function submitForm() {
+    // Adăugăm datele de contact în obiect
+    formData['client_name'] = document.getElementById('name').value;
+    formData['client_email'] = document.getElementById('email').value;
+    formData['client_phone'] = document.getElementById('phone').value;
 
-function collectClientData(){
-  return {
-    name: val("name"),
-    company: val("company"),
-    email: val("email"),
-    phone: val("phone"),
-    address: val("address"),
-    details: val("details")
-  };
+    const scriptURL = 'AICI_LIPEȘTE_URL_UL_DE_LA_PASUL_1';
+
+    // Transformăm obiectul în format URLSearchParams pentru a fi citit de Apps Script
+    const params = new URLSearchParams(formData);
+
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: params,
+        mode: 'no-cors' // Necesar pentru a evita erorile CORS cu Apps Script
+    })
+    .then(response => {
+        alert("Solicitarea a fost trimisă cu succes!");
+        window.location.reload(); // Resetăm formularul
+    })
+    .catch(error => console.error('Eroare!', error.message));
 }
-
-/* ✅ SUBMIT FINAL */
-
-function submitTicket(){
-
-  Object.assign(data, collectClientData());
-
-  // transform JSON → string
-  document.getElementById("formData").value = JSON.stringify(data);
-
-  document.getElementById("hiddenForm").submit();
-
-  alert("Ticket trimis ✅");
-  location.reload();
-}
-
-
-/* utilitar */
-function val(id){
-  const el = document.getElementById(id);
-  return el ? el.value : "";
-}
-``
-
-function val(id){ return document.getElementById(id).value; }
 </script>
 
 </body>
